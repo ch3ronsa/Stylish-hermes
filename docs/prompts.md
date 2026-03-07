@@ -6,39 +6,43 @@
 Use the ai-personal-stylist skill. Ask me only the minimum questions needed to build a short personal style profile. Then write a short summary suitable for Hermes memory. Do not store my full wardrobe in memory.
 ```
 
-## 2. Wardrobe File Initialization
+## 2. Inspiration Analysis
 
 ```text
-Use the ai-personal-stylist skill. Check whether ~/.hermes/data/wardrobe.json exists. If it does not exist, create it with this schema:
-{"tops":[],"bottoms":[],"outerwear":[],"shoes":[],"accessories":[],"outfit_history":[]}
-Then tell me you are ready for wardrobe intake.
+Use the ai-personal-stylist skill, but do not add anything to ~/.hermes/data/wardrobe.json. Treat this image only as inspiration/reference. Analyze the style aesthetic, clothing categories, color palette, mood, occasion fit, and how this look could be recreated in real life.
 ```
 
-## 3. First Clothing Photo Analysis
+## 3. Does This Suit Me
 
 ```text
-Use the ai-personal-stylist skill. Analyze this clothing photo. Extract the clothing type, main color, visible pattern, likely fabric, style category, season suitability, and visible condition. Then add it to ~/.hermes/data/wardrobe.json in the correct category and suggest 2 outfit ideas using existing pieces if possible.
+Use the ai-personal-stylist skill, but do not add anything to wardrobe. Treat this image as inspiration only. Based on my style profile, tell me whether this look suits me, what parts are most wearable, and what I should avoid copying literally.
 ```
 
-## 4. What Should I Wear Today
+## 4. Translate To Real Life
 
 ```text
-Use the ai-personal-stylist skill. Read my wardrobe from ~/.hermes/data/wardrobe.json. Check the current weather for my city. If my city or occasion is unclear, ask a short clarification question first. Then recommend 3 outfit options and explain which one is best.
+Use the ai-personal-stylist skill, but do not add anything to wardrobe. Treat this image only as inspiration. Translate this look into a wearable real-life outfit with simpler alternatives and practical shopping suggestions.
 ```
 
-## 5. Wardrobe Report
+## 5. Create 3 Inspired Variations
 
 ```text
-Use the ai-personal-stylist skill. Analyze ~/.hermes/data/wardrobe.json and give me a short report with category counts, color distribution, style balance, season coverage, and missing basics.
+Use the ai-personal-stylist skill, but do not add anything to wardrobe. Use this image only as a style reference. Create 3 inspired outfit directions: one casual, one polished, and one bold.
 ```
 
-## 6. Shopping Decision
+## 6. Color Palette Analysis
 
 ```text
-Use the ai-personal-stylist skill. Analyze this item from its image or description and compare it with my existing wardrobe. Score wardrobe compatibility, color compatibility, style compatibility, and versatility. End with a clear verdict: buy, maybe, or skip.
+Use the ai-personal-stylist skill, but do not add anything to wardrobe. Analyze the color palette in this image, explain why it works, and suggest 3 similar palettes I could use in real life.
 ```
 
-## 7. Style Transition
+## 7. Wardrobe Mode Opt-In
+
+```text
+Use the ai-personal-stylist skill. I am now sending a real clothing photo from my own wardrobe. Analyze it, and only after the analysis add it to ~/.hermes/data/wardrobe.json in the correct category.
+```
+
+## 8. Style Transition
 
 ```text
 Use the ai-personal-stylist skill. Read my current wardrobe and build a 30-day transition plan toward [target style]. Split the advice into keep, restyle, and buy-later. Prioritize practical changes first.

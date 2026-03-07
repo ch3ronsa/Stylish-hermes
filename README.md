@@ -4,11 +4,11 @@ AI Personal Stylist MVP built for Hermes Agent.
 
 ## What This Does
 
-- Analyzes clothing photos
-- Stores wardrobe inventory locally in `~/.hermes/data/wardrobe.json`
+- Analyzes inspiration images, moodboards, editorials, anime references, and outfit photos
+- Explains style aesthetics, silhouettes, and color palettes
+- Translates inspiration looks into wearable real-life outfits
 - Suggests outfits based on weather and occasion
-- Generates optional outfit visuals
-- Supports Telegram and cron-based reminders through Hermes
+- Optionally stores wardrobe inventory locally only when the user explicitly wants wardrobe tracking
 
 ## Project Structure
 
@@ -48,7 +48,8 @@ TELEGRAM_BOT_TOKEN=...
 
 ## Notes
 
+- The default mode is inspiration analysis, not wardrobe tracking.
 - Do not store the full wardrobe in Hermes memory.
 - Use Hermes memory only for short user profile summaries.
-- Store the full wardrobe in `wardrobe.json`.
+- Use `wardrobe.json` only if you explicitly want to track real owned clothing.
 - `ffmpeg` is optional unless you want voice-heavy TTS flows.
