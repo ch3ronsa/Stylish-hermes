@@ -39,6 +39,13 @@ FIRECRAWL_API_KEY=fc-...
 TELEGRAM_BOT_TOKEN=...
 ```
 
+## Security
+
+- Never commit real API keys or bot tokens.
+- Keep secrets only in `~/.hermes/.env` on your machine.
+- This repository should contain only templates and example files.
+- `.env` files are ignored by git in this repo.
+
 ## Notes
 
 - Do not store the full wardrobe in Hermes memory.
