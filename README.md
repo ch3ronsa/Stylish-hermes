@@ -18,6 +18,8 @@ data/wardrobe.json
 docs/prompts.md
 docs/first-run-checklist.md
 docs/cron-prompts.md
+docs/hackathon-demo.md
+docs/hackathon-pitch.md
 scripts/setup-wsl.sh
 scripts/fix-hermes-max-tokens.py
 ```
@@ -30,6 +32,15 @@ scripts/fix-hermes-max-tokens.py
 4. Add your API keys to `~/.hermes/.env`.
 5. Run `hermes gateway setup`.
 6. Test the skill manually before adding cron jobs.
+
+## Hackathon Focus
+
+For the demo, stay on the core loop:
+
+1. give Hermes an inspiration image
+2. get back the aesthetic, palette, occasion, and wearable version
+
+Use [docs/hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md) for the demo flow and [docs/hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md) for the short pitch.
 
 ## Required Environment Variables
 
