@@ -19,6 +19,7 @@ docs/prompts.md
 docs/first-run-checklist.md
 docs/cron-prompts.md
 scripts/setup-wsl.sh
+scripts/fix-hermes-max-tokens.py
 ```
 
 ## Quick Start
@@ -53,3 +54,14 @@ TELEGRAM_BOT_TOKEN=...
 - Use Hermes memory only for short user profile summaries.
 - Use `wardrobe.json` only if you explicitly want to track real owned clothing.
 - `ffmpeg` is optional unless you want voice-heavy TTS flows.
+
+## Low-Credit Fix
+
+If Hermes keeps failing with an OpenRouter `402` error mentioning `65536 tokens`, run:
+
+```bash
+python3 /mnt/c/Users/cheo/Desktop/projeler/nous/Stylish-hermes/scripts/fix-hermes-max-tokens.py
+```
+
+This patches the local Hermes CLI to honor `agent.max_tokens` from `~/.hermes/config.yaml`
+and sets that limit to `4096`.
