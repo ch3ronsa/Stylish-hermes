@@ -6,14 +6,21 @@ This MVP is not a wardrobe tracker-first app.
 It is an inspiration-first AI stylist built on Hermes Agent.
 
 Core promise:
-- analyze a style image
-- explain the aesthetic
-- extract the color palette and occasion fit
-- turn the reference into a wearable real-life version
+- user sends an inspiration image in Telegram
+- Hermes explains the aesthetic and occasion fit
+- Hermes turns the reference into a wearable real-life version
+- Hermes can generate a polished inspired look image with FAL
 
 ## Demo Flow
 
-Use one clean inspiration image and one short prompt.
+Use Telegram as the front door.
+Do not demo the raw terminal unless something breaks.
+
+### Step 1: Send an inspiration image in Telegram
+
+Use one strong image: editorial, Pinterest, anime, runway, or a Gemini-generated fashion image.
+
+### Step 2: Ask for analysis
 
 Prompt:
 
@@ -21,40 +28,53 @@ Prompt:
 Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Analyze this image briefly: aesthetic, color palette, occasion, and one simple real-life version of the look.
 ```
 
-If Hermes asks for a path, use a WSL path like:
+### Step 3: Ask for the wow moment
+
+Prompt:
 
 ```text
-/mnt/c/Users/cheo/Downloads/example.png
+Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Generate one polished, wearable inspired version of this look as a realistic fashion image. Keep the core vibe, but make it believable for real life.
 ```
 
 ## What To Say While Demoing
 
-1. This is an inspiration-first stylist, not a closet logger.
-2. I can give it anime, Pinterest, editorial, or lookbook references.
-3. It identifies the vibe, explains why it works, and converts it into a wearable version.
-4. The same system can later extend into shopping, weather styling, and optional wardrobe mode.
+1. This is a stylist that starts from taste, not inventory.
+2. Users already collect inspiration in chats and social apps, so Telegram is the natural interface.
+3. The product does two things: interpret the reference, then translate it into something wearable.
+4. The FAL-generated output makes the recommendation feel like a product, not just a text answer.
 
 ## Judge-Friendly Points
 
 - Clear user value: style inspiration becomes actionable
 - Works with ambiguous or aesthetic-heavy references
 - Practical output, not just labels
+- Messaging-first experience instead of a developer-facing interface
+- Visual output creates a stronger demo moment
 - Built on Hermes tools and skills, not a static prompt dump
 
-## Safe Backup Prompt
+## Telegram Setup Before Demo
 
-If the first prompt is too broad, use:
+1. `hermes gateway setup`
+2. Connect the Telegram bot token
+3. Start the gateway
+4. Message the bot from Telegram
+
+## FAL Setup Before Demo
+
+1. Put `FAL_KEY=...` in `~/.hermes/.env`
+2. Restart Hermes or the gateway
+3. Use the generation prompt only after analysis succeeds
+
+## Safe Backup Prompt
 
 ```text
 Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Tell me the aesthetic, key colors, best occasion, and a simpler everyday version.
 ```
 
-## Do Not Demo
+## If Telegram Fails
 
-- wardrobe tracking
-- cron jobs
-- Telegram setup
-- image generation
-- long multi-step flows
+Fallback order:
 
-These are extras. The demo should stay on the core loop.
+1. Hermes CLI with the same prompt
+2. analysis only
+3. skip generation only if FAL is unavailable

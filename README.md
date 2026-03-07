@@ -37,8 +37,9 @@ scripts/fix-hermes-max-tokens.py
 
 For the demo, stay on the core loop:
 
-1. give Hermes an inspiration image
+1. send an inspiration image through Telegram
 2. get back the aesthetic, palette, occasion, and wearable version
+3. generate one wearable inspired image with FAL
 
 Use [docs/hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md) for the demo flow and [docs/hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md) for the short pitch.
 

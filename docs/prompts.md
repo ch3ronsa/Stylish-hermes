@@ -12,6 +12,18 @@ Use the ai-personal-stylist skill. Ask me only the minimum questions needed to b
 Use the ai-personal-stylist skill, but do not add anything to ~/.hermes/data/wardrobe.json. Treat this image only as inspiration/reference. Analyze the style aesthetic, clothing categories, color palette, mood, occasion fit, and how this look could be recreated in real life.
 ```
 
+## 2B. Telegram Demo Analysis
+
+```text
+Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Analyze this image briefly: aesthetic, color palette, occasion, and one simple real-life version of the look.
+```
+
+## 2C. Telegram Demo Generation
+
+```text
+Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Generate one polished, wearable inspired version of this look as a realistic fashion image. Keep the same vibe, but make it believable for real life.
+```
+
 ## 3. Does This Suit Me
 
 ```text
