@@ -1,80 +1,93 @@
 # Hackathon Demo
 
-## Scope
+## Product Story
 
-This MVP is not a wardrobe tracker-first app.
-It is an inspiration-first AI stylist built on Hermes Agent.
+Stylish Hermes helps people turn saved fashion inspiration into something wearable.
 
-Core promise:
-- user sends an inspiration image in Telegram
-- Hermes explains the aesthetic and occasion fit
-- Hermes turns the reference into a wearable real-life version
-- Hermes can generate a polished inspired look image with FAL
+Instead of asking users to manually build a wardrobe database first, the product starts with the way people already behave:
 
-## Demo Flow
+- they save looks
+- they send references to friends
+- they want to know how to recreate the vibe
 
-Use Telegram as the front door.
-Do not demo the raw terminal unless something breaks.
+This demo shows that loop inside Telegram.
 
-### Step 1: Send an inspiration image in Telegram
+## Demo Goal
 
-Use one strong image: editorial, Pinterest, anime, runway, or a Gemini-generated fashion image.
+By the end of the demo, the judges should understand one simple thing:
 
-### Step 2: Ask for analysis
+**This bot can look at a reference image, explain the style, and turn it into a realistic wearable outfit.**
 
-Prompt:
+## Happy Path
 
-```text
-Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Analyze this image briefly: aesthetic, color palette, occasion, and one simple real-life version of the look.
-```
+### Step 1
 
-### Step 3: Ask for the wow moment
+Open Telegram and send one strong reference image.
 
-Prompt:
+Best choices:
+- editorial fashion photo
+- Pinterest outfit collage
+- anime-inspired fashion look
+- runway or lookbook image
+- AI-generated fashion concept image
 
-```text
-Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Generate one polished, wearable inspired version of this look as a realistic fashion image. Keep the core vibe, but make it believable for real life.
-```
+### Step 2
 
-## What To Say While Demoing
-
-1. This is a stylist that starts from taste, not inventory.
-2. Users already collect inspiration in chats and social apps, so Telegram is the natural interface.
-3. The product does two things: interpret the reference, then translate it into something wearable.
-4. The FAL-generated output makes the recommendation feel like a product, not just a text answer.
-
-## Judge-Friendly Points
-
-- Clear user value: style inspiration becomes actionable
-- Works with ambiguous or aesthetic-heavy references
-- Practical output, not just labels
-- Messaging-first experience instead of a developer-facing interface
-- Visual output creates a stronger demo moment
-- Built on Hermes tools and skills, not a static prompt dump
-
-## Telegram Setup Before Demo
-
-1. `hermes gateway setup`
-2. Connect the Telegram bot token
-3. Start the gateway
-4. Message the bot from Telegram
-
-## FAL Setup Before Demo
-
-1. Put `FAL_KEY=...` in `~/.hermes/.env`
-2. Restart Hermes or the gateway
-3. Use the generation prompt only after analysis succeeds
-
-## Safe Backup Prompt
+Send this:
 
 ```text
-Use the ai-personal-stylist skill. Inspiration mode only. Do not add anything to wardrobe. Tell me the aesthetic, key colors, best occasion, and a simpler everyday version.
+Analyze this image briefly: aesthetic, colors, occasion, wearable version.
 ```
 
-## If Telegram Fails
+### Step 3
 
-Fallback order:
+After the analysis lands, send this:
 
-1. Hermes CLI with the same prompt
-2. analysis only
-3. skip generation only if FAL is unavailable
+```text
+Generate one realistic wearable version of this look.
+```
+
+### Step 4
+
+Show the generated result and explain that the bot is not only labeling the style, it is translating it into a practical outfit.
+
+## What To Say During The Demo
+
+Use short lines. Do not over-explain.
+
+Suggested narration:
+
+1. "Most people already collect inspiration images, but they do not know how to turn them into something wearable."
+2. "Our bot lives in Telegram, where users already share taste and references."
+3. "First it interprets the style. Then it translates that vibe into a realistic outfit."
+4. "And instead of stopping at text, it can generate a polished inspired version."
+
+## Why This Is A Good Hackathon Demo
+
+- The input is visual.
+- The output is visual.
+- The interface is familiar.
+- The value is obvious in under a minute.
+- It feels like a product, not a terminal experiment.
+
+## Backup Lines For Judges
+
+- "This is taste-to-execution."
+- "We convert inspiration into actionable styling."
+- "The user does not need fashion vocabulary to get value."
+
+## Backup Prompt
+
+If the main prompt feels too long, use this:
+
+```text
+Analyze briefly: aesthetic, colors, occasion, wearable version.
+```
+
+## Backup Plan
+
+If generation fails:
+
+1. Show the analysis output.
+2. Explain that the generation step is optional enhancement.
+3. Emphasize that the core product value is interpretation plus translation.

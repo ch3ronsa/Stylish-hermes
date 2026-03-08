@@ -1,79 +1,81 @@
 # Stylish Hermes
 
-AI Personal Stylist MVP built for Hermes Agent.
+Stylish Hermes is a Telegram-first AI stylist built on Hermes Agent.
 
-## What This Does
+The product is not a wardrobe tracker by default. It is an inspiration-to-outfit translator:
 
-- Analyzes inspiration images, moodboards, editorials, anime references, and outfit photos
-- Explains style aesthetics, silhouettes, and color palettes
-- Translates inspiration looks into wearable real-life outfits
-- Suggests outfits based on weather and occasion
-- Optionally stores wardrobe inventory locally only when the user explicitly wants wardrobe tracking
+1. the user sends a reference image
+2. the bot explains the aesthetic
+3. the bot turns that vibe into a wearable real-life outfit
+4. the bot can generate a polished inspired look image
+
+## Hackathon Demo
+
+This is the core demo loop:
+
+1. Send an inspiration image through Telegram.
+2. Get back a short style breakdown.
+3. Ask for a wearable version.
+4. Ask for a generated fashion image.
+
+Use these docs during the presentation:
+
+- [hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md)
+- [hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md)
+- [prompts.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/prompts.md)
+
+## What It Does
+
+- Reads outfit inspiration from Telegram image uploads
+- Identifies aesthetic, silhouette, palette, and occasion fit
+- Translates abstract fashion references into practical real-life styling
+- Generates a realistic inspired version with FAL
+- Keeps wardrobe tracking optional instead of forcing inventory collection
+
+## Stack
+
+- Hermes Agent for orchestration
+- Telegram as the user-facing interface
+- GLM for chat and image understanding
+- FAL for image generation
+
+## Quick Start
+
+1. Install Hermes Agent in WSL2.
+2. Copy [SKILL.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/skill/SKILL.md) to `~/.hermes/skills/lifestyle/ai-personal-stylist/SKILL.md`.
+3. Add your API keys to `~/.hermes/.env`.
+4. Run `hermes gateway setup`.
+5. Start the bot with `hermes gateway`.
+6. Test the Telegram flow before the demo.
+
+## Required Secrets
+
+```bash
+GLM_API_KEY=...
+GLM_BASE_URL=https://api.z.ai/api/coding/paas/v4
+FAL_KEY=...
+TELEGRAM_BOT_TOKEN=...
+AUXILIARY_VISION_PROVIDER=main
+AUXILIARY_VISION_MODEL=glm-4.6v-flash
+```
 
 ## Project Structure
 
 ```text
 skill/SKILL.md
-data/wardrobe.json
 docs/prompts.md
-docs/first-run-checklist.md
-docs/cron-prompts.md
 docs/hackathon-demo.md
 docs/hackathon-pitch.md
+docs/first-run-checklist.md
+docs/cron-prompts.md
+data/wardrobe.json
 scripts/setup-wsl.sh
 scripts/fix-hermes-max-tokens.py
 ```
 
-## Quick Start
-
-1. Install Hermes Agent in WSL2.
-2. Copy `skill/SKILL.md` to `~/.hermes/skills/lifestyle/ai-personal-stylist/SKILL.md`.
-3. Copy `data/wardrobe.json` to `~/.hermes/data/wardrobe.json`.
-4. Add your API keys to `~/.hermes/.env`.
-5. Run `hermes gateway setup`.
-6. Test the skill manually before adding cron jobs.
-
-## Hackathon Focus
-
-For the demo, stay on the core loop:
-
-1. send an inspiration image through Telegram
-2. get back the aesthetic, palette, occasion, and wearable version
-3. generate one wearable inspired image with FAL
-
-Use [docs/hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md) for the demo flow and [docs/hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md) for the short pitch.
-
-## Required Environment Variables
-
-```bash
-OPENROUTER_API_KEY=sk-or-...
-FAL_KEY=...
-FIRECRAWL_API_KEY=fc-...
-TELEGRAM_BOT_TOKEN=...
-```
-
-## Security
-
-- Never commit real API keys or bot tokens.
-- Keep secrets only in `~/.hermes/.env` on your machine.
-- This repository should contain only templates and example files.
-- `.env` files are ignored by git in this repo.
-
 ## Notes
 
-- The default mode is inspiration analysis, not wardrobe tracking.
-- Do not store the full wardrobe in Hermes memory.
-- Use Hermes memory only for short user profile summaries.
-- Use `wardrobe.json` only if you explicitly want to track real owned clothing.
-- `ffmpeg` is optional unless you want voice-heavy TTS flows.
-
-## Low-Credit Fix
-
-If Hermes keeps failing with an OpenRouter `402` error mentioning `65536 tokens`, run:
-
-```bash
-python3 /mnt/c/Users/cheo/Desktop/projeler/nous/Stylish-hermes/scripts/fix-hermes-max-tokens.py
-```
-
-This patches the local Hermes CLI to honor `agent.max_tokens` from `~/.hermes/config.yaml`
-and sets that limit to `4096`.
+- Demo Telegram, not the raw terminal.
+- The default mode is inspiration analysis.
+- Only use wardrobe mode if the user explicitly wants to track real clothes.
+- Never commit real API keys or bot tokens.

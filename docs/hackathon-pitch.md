@@ -2,26 +2,43 @@
 
 ## One-Liner
 
-Stylish Hermes is a Telegram-first AI stylist that turns inspiration images into wearable, real-life outfit guidance.
+Stylish Hermes is a Telegram-first AI stylist that turns inspiration images into wearable real-life fashion guidance.
 
-## 30-Second Version
+## 15-Second Pitch
 
-People constantly save outfit inspiration from Pinterest, anime, editorials, and social media, but they still do not know how to translate that into something wearable. Stylish Hermes solves that in a familiar interface: Telegram. You send a reference image, it explains the aesthetic, extracts the palette and occasion fit, and then turns it into a wearable real-life version. It can even generate a polished inspired outfit visual, so the output feels like a stylist, not just a chatbot.
+People save fashion inspiration all day, but they still do not know how to actually wear it. Stylish Hermes lets you send a reference image in Telegram, get the style broken down, and instantly see a more wearable version.
+
+## 30-Second Pitch
+
+People constantly collect outfit inspiration from Pinterest, anime, editorials, and social media, but there is still a gap between liking a look and knowing how to wear it in real life. Stylish Hermes closes that gap. You send a reference image in Telegram, the bot identifies the aesthetic, color palette, and occasion fit, then translates that vibe into a practical wearable version. It can also generate a polished inspired outfit image, so the result feels like a real stylist experience instead of just a text chatbot.
+
+## 60-Second Pitch
+
+Fashion inspiration is everywhere, but styling advice is still hard to operationalize. Most people do not need another app that labels an outfit as "old money" or "streetwear." They need help turning taste into action. Stylish Hermes is a Telegram-first AI stylist built on Hermes Agent. The user sends a reference image, the system interprets the look, explains why it works, and then converts it into something believable for everyday life. That means a faster path from inspiration to execution, inside an interface people already use. The generated output also gives the product a strong visual payoff, which makes the experience feel concrete and personal.
 
 ## Problem
 
-- inspiration is easy to collect
-- interpretation is hard
-- most users want actionable styling, not just fashion labels
-- most AI fashion tools stop at text and do not show the adapted result well
+- Inspiration is easy to collect.
+- Styling interpretation is hard.
+- Users want practical guidance, not just labels.
+- Most AI fashion flows stop at text.
 
 ## Solution
 
-- image in through Telegram
-- style analysis out
-- wearable outfit translation out
-- optional generated inspired look out
+- Telegram as the interface
+- Image-first interaction
+- Fast style interpretation
+- Wearable real-life translation
+- Optional generated inspired outfit image
 
-## Why It Matters
+## Why It Wins
 
-It closes the gap between taste and execution.
+- Instant value from one image
+- Strong before-and-after demo moment
+- Familiar user interface
+- Clear consumer use case
+- Built as an actual agent workflow, not a static prompt
+
+## Closing Line
+
+Stylish Hermes turns fashion inspiration into something people can actually wear.
