@@ -16,7 +16,7 @@ This demo shows that loop inside Telegram.
 
 By the end of the demo, the judges should understand one simple thing:
 
-**This bot can look at a reference image, explain the style, and turn it into a realistic wearable outfit.**
+**This bot can look at a reference image, understand the style, and transform it into a different wearable outfit.**
 
 ## Happy Path
 
@@ -44,12 +44,20 @@ Analyze this image briefly: aesthetic, colors, occasion, wearable version.
 After the analysis lands, send this:
 
 ```text
-Generate one realistic wearable version of this look.
+Transform this look into a smart-casual everyday outfit for Istanbul spring. Keep the vibe, but make it practical, wearable, and visually different from the original.
 ```
 
 ### Step 4
 
-Show the generated result and explain that the bot is not only labeling the style, it is translating it into a practical outfit.
+After the transformation lands, send this:
+
+```text
+Generate the transformed version as a realistic fashion image.
+```
+
+### Step 5
+
+Show the generated result and explain that the bot is not recreating the reference. It is translating the aesthetic into a new, usable outfit.
 
 ## What To Say During The Demo
 
@@ -59,8 +67,8 @@ Suggested narration:
 
 1. "Most people already collect inspiration images, but they do not know how to turn them into something wearable."
 2. "Our bot lives in Telegram, where users already share taste and references."
-3. "First it interprets the style. Then it translates that vibe into a realistic outfit."
-4. "And instead of stopping at text, it can generate a polished inspired version."
+3. "First it interprets the style. Then it transforms that vibe into a different outfit for a real context."
+4. "And instead of stopping at text, it can generate the transformed result."
 
 ## Why This Is A Good Hackathon Demo
 
@@ -74,6 +82,7 @@ Suggested narration:
 
 - "This is taste-to-execution."
 - "We convert inspiration into actionable styling."
+- "We do transformation, not simple recreation."
 - "The user does not need fashion vocabulary to get value."
 
 ## Backup Prompt
@@ -81,7 +90,7 @@ Suggested narration:
 If the main prompt feels too long, use this:
 
 ```text
-Analyze briefly: aesthetic, colors, occasion, wearable version.
+Transform this into a practical everyday look while keeping the same vibe.
 ```
 
 ## Backup Plan

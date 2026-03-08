@@ -20,6 +20,7 @@ This is the core demo loop:
 
 Use these docs during the presentation:
 
+- [how-it-works.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/how-it-works.md)
 - [hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md)
 - [hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md)
 - [prompts.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/prompts.md)
@@ -28,9 +29,16 @@ Use these docs during the presentation:
 
 - Reads outfit inspiration from Telegram image uploads
 - Identifies aesthetic, silhouette, palette, and occasion fit
-- Translates abstract fashion references into practical real-life styling
-- Generates a realistic inspired version with FAL
+- Transforms abstract fashion references into different practical real-life outfits
+- Generates a new transformed version with FAL
 - Keeps wardrobe tracking optional instead of forcing inventory collection
+
+## Why It Feels Like A Product
+
+- It starts where users already are: Telegram
+- It accepts visual references instead of requiring fashion vocabulary
+- It does transformation, not simple recreation
+- It produces both explanation and visual payoff
 
 ## Stack
 
@@ -64,6 +72,7 @@ AUXILIARY_VISION_MODEL=glm-4.6v-flash
 ```text
 skill/SKILL.md
 docs/prompts.md
+docs/how-it-works.md
 docs/hackathon-demo.md
 docs/hackathon-pitch.md
 docs/first-run-checklist.md
@@ -77,5 +86,6 @@ scripts/fix-hermes-max-tokens.py
 
 - Demo Telegram, not the raw terminal.
 - The default mode is inspiration analysis.
+- The best demo is transformation, not recreation.
 - Only use wardrobe mode if the user explicitly wants to track real clothes.
 - Never commit real API keys or bot tokens.
