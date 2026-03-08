@@ -30,7 +30,7 @@ Use these docs during the presentation:
 - Reads outfit inspiration from Telegram image uploads
 - Identifies aesthetic, silhouette, palette, and occasion fit
 - Transforms abstract fashion references into different practical real-life outfits
-- Generates a new transformed version with FAL
+- Generates a new transformed version with FAL or OpenAI image generation fallback
 - Keeps wardrobe tracking optional instead of forcing inventory collection
 
 ## Why It Feels Like A Product
@@ -45,7 +45,8 @@ Use these docs during the presentation:
 - Hermes Agent for orchestration
 - Telegram as the user-facing interface
 - GLM for chat and image understanding
-- FAL for image generation
+- FAL as the default image generator
+- OpenAI Images as the fallback when FAL is unavailable
 
 ## Quick Start
 
@@ -62,6 +63,7 @@ Use these docs during the presentation:
 GLM_API_KEY=...
 GLM_BASE_URL=https://api.z.ai/api/coding/paas/v4
 FAL_KEY=...
+OPENAI_API_KEY=...
 TELEGRAM_BOT_TOKEN=...
 AUXILIARY_VISION_PROVIDER=main
 AUXILIARY_VISION_MODEL=glm-4.6v-flash
@@ -80,6 +82,7 @@ docs/cron-prompts.md
 data/wardrobe.json
 scripts/setup-wsl.sh
 scripts/fix-hermes-max-tokens.py
+scripts/enable-openai-image-fallback.py
 ```
 
 ## Notes
@@ -89,3 +92,4 @@ scripts/fix-hermes-max-tokens.py
 - The best demo is transformation, not recreation.
 - Only use wardrobe mode if the user explicitly wants to track real clothes.
 - Never commit real API keys or bot tokens.
+- If FAL is locked or out of balance, run `python scripts/enable-openai-image-fallback.py` and use `OPENAI_API_KEY`.

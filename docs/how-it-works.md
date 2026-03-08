@@ -52,7 +52,13 @@ This is the real product value.
 
 ### 4. Visual Output
 
-The transformed concept can then be turned into a realistic generated fashion image using FAL.
+The transformed concept can then be turned into a realistic generated fashion image.
+
+Default path:
+- FAL
+
+Fallback path:
+- OpenAI image generation
 
 That creates a strong before-and-after moment:
 - original inspiration
