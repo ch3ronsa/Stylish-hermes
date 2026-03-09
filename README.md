@@ -30,7 +30,13 @@ Use these docs during the presentation:
 - Reads outfit inspiration from Telegram image uploads
 - Identifies aesthetic, silhouette, palette, and occasion fit
 - Transforms abstract fashion references into different practical real-life outfits
-- Generates a new transformed version with FAL, OpenAI, or Gemini image generation (triple fallback)
+- Generates transformed outfit visuals with triple fallback (FAL, OpenAI, Gemini)
+- Visual transform: reference image in, transformed outfit image out (Gemini multimodal)
+- Moodboard analysis: multiple images in, unified style direction out
+- Shopping suggestions with real product links via web search
+- Color palette analysis with harmony type and seasonal compatibility
+- Try-on visualization (experimental)
+- Automated daily outfit recommendations with weather awareness
 - Keeps wardrobe tracking optional instead of forcing inventory collection
 
 ## Why It Feels Like A Product
@@ -88,6 +94,8 @@ scripts/setup-wsl.sh
 scripts/fix-hermes-max-tokens.py
 scripts/enable-openai-image-fallback.py
 scripts/enable-gemini-image-fallback.py
+scripts/enable-gemini-image-transform.py
+scripts/setup-cron-jobs.py
 ```
 
 ## Notes
@@ -100,3 +108,5 @@ scripts/enable-gemini-image-fallback.py
 - If FAL is locked or out of balance, run `python scripts/enable-openai-image-fallback.py` and use `OPENAI_API_KEY`.
 - If OpenAI billing limit is hit, run `python scripts/enable-gemini-image-fallback.py` and use `GEMINI_API_KEY`.
 - Fallback order: FAL -> OpenAI -> Gemini. At least one must be configured.
+- For visual transform (reference image -> transformed outfit), run `python scripts/enable-gemini-image-transform.py`.
+- For automated daily/weekly styling, run `python scripts/setup-cron-jobs.py --city Istanbul`.

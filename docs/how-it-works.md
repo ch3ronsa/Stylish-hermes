@@ -102,12 +102,41 @@ They can simply:
 
 That makes the product accessible, fast, and easy to demo.
 
+## Advanced Features
+
+### Visual Transform (Reference -> New Outfit)
+
+When `image_transform` is available (requires Gemini), the system can take the actual reference image and generate a transformed version directly. This creates a stronger visual connection between the original inspiration and the wearable result.
+
+### Moodboard Analysis
+
+Users can send multiple inspiration images. The system finds common threads across all images (shared palette, recurring silhouettes, consistent mood) and synthesizes a unified style direction.
+
+### Shopping Guidance
+
+After analyzing or transforming a look, the system can search for real products using `web_search` and provide specific shopping suggestions with approximate prices and store names.
+
+### Color Palette Analysis
+
+Deep color analysis including harmony type (complementary, analogous, monochromatic), undertone detection, seasonal color theory matching, and alternative palette suggestions.
+
+### Try-On Visualization
+
+Experimental feature using `image_transform` to overlay outfit concepts onto user photos. Results are approximations and noted as such.
+
+### Automated Styling
+
+Scheduled cron jobs for daily outfit recommendations (weather-aware), weekly wardrobe reports, and monthly seasonal checks.
+
 ## Stack Role Breakdown
 
 - Hermes Agent: orchestration
 - Telegram: user-facing interface
 - GLM: reasoning and image understanding
-- FAL: transformed outfit image generation
+- FAL: image generation (primary)
+- OpenAI: image generation (fallback 1)
+- Gemini: image generation (fallback 2) + image transformation
+- Firecrawl: web search, weather, shopping links
 
 ## One-Sentence Summary
 
