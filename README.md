@@ -30,7 +30,7 @@ Use these docs during the presentation:
 - Reads outfit inspiration from Telegram image uploads
 - Identifies aesthetic, silhouette, palette, and occasion fit
 - Transforms abstract fashion references into different practical real-life outfits
-- Generates a new transformed version with FAL or OpenAI image generation fallback
+- Generates a new transformed version with FAL, OpenAI, or Gemini image generation (triple fallback)
 - Keeps wardrobe tracking optional instead of forcing inventory collection
 
 ## Why It Feels Like A Product
@@ -46,7 +46,8 @@ Use these docs during the presentation:
 - Telegram as the user-facing interface
 - GLM for chat and image understanding
 - FAL as the default image generator
-- OpenAI Images as the fallback when FAL is unavailable
+- OpenAI Images as the first fallback
+- Google Gemini as the second fallback
 
 ## Quick Start
 
@@ -62,12 +63,15 @@ Use these docs during the presentation:
 ```bash
 GLM_API_KEY=...
 GLM_BASE_URL=https://api.z.ai/api/coding/paas/v4
-FAL_KEY=...
-OPENAI_API_KEY=...
+FAL_KEY=...                    # Image gen primary (optional)
+OPENAI_API_KEY=...             # Image gen fallback 1 (optional)
+GEMINI_API_KEY=...             # Image gen fallback 2 (optional)
 TELEGRAM_BOT_TOKEN=...
 AUXILIARY_VISION_PROVIDER=main
 AUXILIARY_VISION_MODEL=glm-4.6v-flash
 ```
+
+At least one image generation key (FAL_KEY, OPENAI_API_KEY, or GEMINI_API_KEY) is needed for visual output.
 
 ## Project Structure
 
@@ -83,6 +87,7 @@ data/wardrobe.json
 scripts/setup-wsl.sh
 scripts/fix-hermes-max-tokens.py
 scripts/enable-openai-image-fallback.py
+scripts/enable-gemini-image-fallback.py
 ```
 
 ## Notes
@@ -93,3 +98,5 @@ scripts/enable-openai-image-fallback.py
 - Only use wardrobe mode if the user explicitly wants to track real clothes.
 - Never commit real API keys or bot tokens.
 - If FAL is locked or out of balance, run `python scripts/enable-openai-image-fallback.py` and use `OPENAI_API_KEY`.
+- If OpenAI billing limit is hit, run `python scripts/enable-gemini-image-fallback.py` and use `GEMINI_API_KEY`.
+- Fallback order: FAL -> OpenAI -> Gemini. At least one must be configured.

@@ -156,7 +156,7 @@ When the user wants to shift style direction:
 ## Error Handling
 
 - If `FIRECRAWL_API_KEY` is missing, say that live weather and web search are unavailable.
-- If `FAL_KEY` is missing, say that image generation is unavailable.
+- If image generation fails, the system will automatically try fallback providers in order: FAL -> OpenAI -> Gemini. If all providers fail, say that image generation is temporarily unavailable and continue with text-based styling advice.
 - If `vision_analyze` fails due to invalid image input, ask for another image.
 - If the wardrobe file is missing or malformed, recreate it using the default schema before proceeding.
 

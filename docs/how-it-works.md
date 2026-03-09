@@ -54,11 +54,10 @@ This is the real product value.
 
 The transformed concept can then be turned into a realistic generated fashion image.
 
-Default path:
-- FAL
-
-Fallback path:
-- OpenAI image generation
+Image generation providers (in fallback order):
+- FAL (FLUX 2 Pro + Clarity Upscaler)
+- OpenAI (DALL-E 3)
+- Gemini (gemini-2.0-flash-exp)
 
 That creates a strong before-and-after moment:
 - original inspiration

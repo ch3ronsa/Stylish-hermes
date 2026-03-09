@@ -4,7 +4,7 @@
 
 - WSL2 is installed
 - Hermes is installed
-- API keys are present in `~/.hermes/.env`
+- API keys are present in `~/.hermes/.env` (at least one of FAL_KEY, OPENAI_API_KEY, or GEMINI_API_KEY for image generation)
 - `SKILL.md` exists at `~/.hermes/skills/lifestyle/ai-personal-stylist/SKILL.md`
 - `wardrobe.json` exists at `~/.hermes/data/wardrobe.json`
 
