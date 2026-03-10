@@ -13,3 +13,8 @@ __pycache__/
 *.pem
 *.key
 secrets/
+*.secret
+*credentials*
+.env.local
+.env.production
+.env.staging
