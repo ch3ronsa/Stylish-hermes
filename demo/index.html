@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stylish Hermes - AI Stylist Demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --accent: #c9a55c;
+    --accent2: #e8c97a;
+    --text: #f0ece4;
+    --text-dim: #8a8698;
+    --glow: rgba(201, 165, 92, 0.15);
+    --gradient: linear-gradient(135deg, #c9a55c, #e8c97a, #c9a55c);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* --- Sections --- */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+    position: relative;
+    padding: 60px 40px;
+  }
+
+  /* --- Background Effects --- */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,165,92,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,165,92,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatGlow 8s ease-in-out infinite;
+  }
+  .bg-glow.g1 { top: -200px; right: -200px; }
+  .bg-glow.g2 { bottom: -200px; left: -200px; animation-delay: -4s; }
+
+  @keyframes floatGlow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 30px) scale(1.1); }
+  }
+
+  /* --- Hero --- */
+  #hero {
+    text-align: center;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border: 1px solid rgba(201,165,92,0.3);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+    background: rgba(201,165,92,0.05);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-title .accent {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 24px);
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 24px auto 0;
+    line-height: 1.6;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-tagline {
+    margin-top: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- Problem --- */
+  #problem { z-index: 1; }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .problem-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .problem-card:hover {
+    border-color: rgba(201,165,92,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .problem-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .problem-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+
+  /* --- Flow --- */
+  #flow { z-index: 1; }
+
+  .flow-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 1100px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .flow-step {
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    text-align: center;
+    padding: 32px 20px;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .flow-step.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .flow-step-number {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--bg);
+    margin: 0 auto 20px;
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .flow-step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .flow-step p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .flow-arrow {
+    font-size: 28px;
+    color: var(--accent);
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  /* --- Before/After --- */
+  #transform { z-index: 1; }
+
+  .transform-visual {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 900px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .transform-box {
+    flex: 1;
+    min-width: 280px;
+    max-width: 380px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 0.8s ease;
+  }
+
+  .transform-box.right {
+    transform: translateX(40px);
+  }
+
+  .transform-box.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .transform-box-inner {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.4s;
+  }
+
+  .transform-box:hover .transform-box-inner {
+    border-color: rgba(201,165,92,0.3);
+  }
+
+  .transform-emoji {
+    font-size: 64px;
+    margin-bottom: 24px;
+  }
+
+  .transform-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .transform-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .transform-desc strong {
+    color: var(--text);
+  }
+
+  .transform-arrow-center {
+    font-size: 48px;
+    color: var(--accent);
+    animation: arrowPulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes arrowPulse {
+    0%, 100% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(8px); opacity: 0.5; }
+  }
+
+  /* --- Tech --- */
+  #tech { z-index: 1; }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 800px;
+    justify-content: center;
+  }
+
+  .tech-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .tech-pill.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tech-pill:hover {
+    border-color: rgba(201,165,92,0.4);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .tech-pill .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* --- Value Props --- */
+  #value { z-index: 1; }
+
+  .value-list {
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.5s ease;
+  }
+
+  .value-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .value-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 40px;
+  }
+
+  .value-text h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .value-text p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* --- CTA / Closing --- */
+  #closing { z-index: 1; text-align: center; }
+
+  .closing-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(24px, 4vw, 48px);
+    max-width: 800px;
+    line-height: 1.4;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.2s both;
+  }
+
+  .closing-quote .accent {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .closing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border: 1px solid rgba(201,165,92,0.4);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(201,165,92,0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  .closing-badge .tg-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* --- Navigation dots --- */
+  .nav-dots {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201,165,92,0.4);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .nav-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.3);
+  }
+
+  /* --- Scroll indicator --- */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bounce 2s infinite;
+    opacity: 0.5;
+  }
+
+  .scroll-hint span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .scroll-chevron {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    section { padding: 40px 20px; }
+    .flow-arrow { display: none; }
+    .transform-arrow-center { transform: rotate(90deg); }
+    .nav-dots { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">Moltiverse Hackathon 2025</div>
+  <h1 class="hero-title">
+    Stylish <span class="accent">Hermes</span>
+  </h1>
+  <p class="hero-subtitle">
+    Your AI stylist that lives in Telegram.
+    Send an inspiration image, get a wearable outfit.
+  </p>
+  <p class="hero-tagline">Inspiration &rarr; Execution</p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-chevron"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <p class="section-label">The Problem</p>
+  <h2 class="section-title">Inspiration is easy.<br>Styling is not.</h2>
+  <div class="problem-grid">
+    <div class="problem-card" data-delay="0">
+      <div class="problem-icon">📌</div>
+      <h3>Saved, Never Worn</h3>
+      <p>Thousands of Pinterest saves collecting dust. Cool outfits with no idea how to recreate them.</p>
+    </div>
+    <div class="problem-card" data-delay="150">
+      <div class="problem-icon">🤷</div>
+      <h3>Lost in Translation</h3>
+      <p>Editorial and anime looks don't translate to real life. The gap between taste and wardrobe is huge.</p>
+    </div>
+    <div class="problem-card" data-delay="300">
+      <div class="problem-icon">💬</div>
+      <h3>Text-Only AI</h3>
+      <p>Most AI fashion tools stop at labels. "Old money aesthetic" doesn't tell you what to actually wear.</p>
+    </div>
+    <div class="problem-card" data-delay="450">
+      <div class="problem-icon">📱</div>
+      <h3>Yet Another App</h3>
+      <p>Nobody wants to download a new fashion app. Users already share style in messaging apps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="flow">
+  <p class="section-label">How It Works</p>
+  <h2 class="section-title">Four steps. One Telegram chat.</h2>
+  <div class="flow-container">
+    <div class="flow-step" data-delay="0">
+      <div class="flow-step-number">1</div>
+      <h3>Send</h3>
+      <p>Drop any inspiration image into the chat</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" data-delay="200">
+      <div class="flow-step-number">2</div>
+      <h3>Analyze</h3>
+      <p>AI breaks down aesthetic, palette, silhouette & mood</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" data-delay="400">
+      <div class="flow-step-number">3</div>
+      <h3>Transform</h3>
+      <p>Translates the vibe into a wearable outfit for your context</p>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step" data-delay="600">
+      <div class="flow-step-number">4</div>
+      <h3>Generate</h3>
+      <p>Creates a polished image of the transformed outfit</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORM -->
+<section id="transform">
+  <p class="section-label">The Magic</p>
+  <h2 class="section-title">Transformation, not recreation.</h2>
+  <div class="transform-visual">
+    <div class="transform-box">
+      <div class="transform-box-inner">
+        <div class="transform-emoji">🖼️</div>
+        <div class="transform-label">Input</div>
+        <p class="transform-desc">
+          <strong>Any reference image</strong><br>
+          Pinterest, editorial, anime, runway, AI concept
+        </p>
+      </div>
+    </div>
+    <div class="transform-arrow-center">&rarr;</div>
+    <div class="transform-box right">
+      <div class="transform-box-inner">
+        <div class="transform-emoji">👔</div>
+        <div class="transform-label">Output</div>
+        <p class="transform-desc">
+          <strong>Wearable real-life outfit</strong><br>
+          Context-aware, weather-fit, budget-conscious
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <p class="section-label">Built With</p>
+  <h2 class="section-title">Agent-powered architecture.</h2>
+  <div class="tech-stack">
+    <div class="tech-pill" data-delay="0"><span class="dot"></span> Hermes Agent</div>
+    <div class="tech-pill" data-delay="80"><span class="dot"></span> Telegram Bot</div>
+    <div class="tech-pill" data-delay="160"><span class="dot"></span> GLM-4 Vision</div>
+    <div class="tech-pill" data-delay="240"><span class="dot"></span> Google Gemini</div>
+    <div class="tech-pill" data-delay="320"><span class="dot"></span> FAL FLUX Pro</div>
+    <div class="tech-pill" data-delay="400"><span class="dot"></span> OpenAI DALL-E</div>
+    <div class="tech-pill" data-delay="480"><span class="dot"></span> Firecrawl Search</div>
+    <div class="tech-pill" data-delay="560"><span class="dot"></span> Multi-Provider Fallback</div>
+  </div>
+</section>
+
+<!-- VALUE -->
+<section id="value">
+  <p class="section-label">Why It Wins</p>
+  <h2 class="section-title">Not another chatbot.</h2>
+  <div class="value-list">
+    <div class="value-item" data-delay="0">
+      <span class="value-num">01</span>
+      <div class="value-text">
+        <h4>Visual In, Visual Out</h4>
+        <p>Strong before-and-after moment that judges can see in seconds</p>
+      </div>
+    </div>
+    <div class="value-item" data-delay="150">
+      <span class="value-num">02</span>
+      <div class="value-text">
+        <h4>Zero Friction</h4>
+        <p>No app to download. Users already live in Telegram</p>
+      </div>
+    </div>
+    <div class="value-item" data-delay="300">
+      <span class="value-num">03</span>
+      <div class="value-text">
+        <h4>No Fashion Vocabulary Needed</h4>
+        <p>Send a photo, get an outfit. That simple</p>
+      </div>
+    </div>
+    <div class="value-item" data-delay="450">
+      <span class="value-num">04</span>
+      <div class="value-text">
+        <h4>Real Agent Workflow</h4>
+        <p>Not a wrapper on GPT. Built as an actual agentic pipeline with fallbacks</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing">
+  <p class="closing-quote">
+    We turn fashion inspiration into<br>
+    something people can <span class="accent">actually wear.</span>
+  </p>
+  <div class="closing-badge">
+    <svg class="tg-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.329-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.12.098.153.228.169.337.016.11.036.317.02.49z"/>
+    </svg>
+    Live on Telegram
+  </div>
+</section>
+
+<script>
+  // Section names for nav dots
+  const sections = document.querySelectorAll('section');
+  const navDots = document.getElementById('navDots');
+
+  sections.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => sections[i].scrollIntoView({ behavior: 'smooth' }));
+    navDots.appendChild(dot);
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Activate nav dot
+        const idx = Array.from(sections).indexOf(entry.target);
+        document.querySelectorAll('.nav-dot').forEach((d, i) =>
+          d.classList.toggle('active', i === idx)
+        );
+
+        // Animate children
+        const animatable = entry.target.querySelectorAll(
+          '.problem-card, .flow-step, .transform-box, .tech-pill, .value-item'
+        );
+        animatable.forEach(el => {
+          const delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('visible'), delay);
+        });
+
+        // Closing section special animation
+        if (entry.target.id === 'closing') {
+          const q = entry.target.querySelector('.closing-quote');
+          if (q) q.style.animation = 'fadeInUp 1s ease-out forwards';
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const dots = document.querySelectorAll('.nav-dot');
+    const active = document.querySelector('.nav-dot.active');
+    const idx = Array.from(dots).indexOf(active);
+
+    if (e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      if (idx < sections.length - 1) sections[idx + 1].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (idx > 0) sections[idx - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
+
+</body>
+</html>

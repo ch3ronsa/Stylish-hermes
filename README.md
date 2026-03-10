@@ -1,112 +1,129 @@
 # Stylish Hermes
 
-Stylish Hermes is a Telegram-first AI stylist built on Hermes Agent.
+**AI stylist that lives in Telegram.** Send a fashion inspiration image, get a wearable real-life outfit back.
 
-The product is not a wardrobe tracker by default. It is an inspiration-to-outfit translator:
+Built on [Hermes Agent](https://github.com/hermes-agent) for the Moltiverse Hackathon.
 
-1. the user sends a reference image
-2. the bot explains the aesthetic
-3. the bot turns that vibe into a wearable real-life outfit
-4. the bot can generate a polished inspired look image
+---
 
-## Hackathon Demo
+## The Problem
 
-This is the core demo loop:
+People save fashion inspiration everywhere - Pinterest, Instagram, anime, editorials - but still don't know how to actually **wear** it. Existing AI tools just label outfits ("old money", "streetwear") without telling you what to put on.
 
-1. Send an inspiration image through Telegram.
-2. Get back a short style breakdown.
-3. Ask for a wearable version.
-4. Ask for a generated fashion image.
+## The Solution
 
-Use these docs during the presentation:
+Stylish Hermes **translates** inspiration into action:
 
-- [how-it-works.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/how-it-works.md)
-- [hackathon-demo.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-demo.md)
-- [hackathon-pitch.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/hackathon-pitch.md)
-- [prompts.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/docs/prompts.md)
+1. **Send** any reference image to the Telegram bot
+2. **Analyze** - AI breaks down aesthetic, palette, silhouette, mood
+3. **Transform** - converts the vibe into a wearable outfit for your context
+4. **Generate** - creates a polished image of the transformed outfit
 
-## What It Does
+> This is transformation, not recreation. The bot doesn't copy the reference - it translates the aesthetic into something you can actually wear.
 
-- Reads outfit inspiration from Telegram image uploads
-- Identifies aesthetic, silhouette, palette, and occasion fit
-- Transforms abstract fashion references into different practical real-life outfits
-- Generates transformed outfit visuals with triple fallback (FAL, OpenAI, Gemini)
-- Visual transform: reference image in, transformed outfit image out (Gemini multimodal)
-- Moodboard analysis: multiple images in, unified style direction out
-- Shopping suggestions with real product links via web search
-- Color palette analysis with harmony type and seasonal compatibility
-- Try-on visualization (experimental)
-- Automated daily outfit recommendations with weather awareness
-- Keeps wardrobe tracking optional instead of forcing inventory collection
+## Key Features
 
-## Why It Feels Like A Product
+| Feature | Description |
+|---------|-------------|
+| Visual Transform | Reference image in, transformed outfit image out |
+| Side-by-Side Compare | Original inspiration + transformed outfit in one image |
+| Moodboard Analysis | Send multiple images, get a unified style direction |
+| Shopping with Links | Real product suggestions with prices via web search |
+| Color Palette Analysis | Harmony type, undertones, seasonal compatibility |
+| Try-On Visualization | Experimental overlay of outfits on user photos |
+| Inline Keyboard | One-tap style choices (Casual, Office, Bold) |
+| Smart Fallbacks | Triple image gen: FAL -> OpenAI -> Gemini |
+| Session Memory | Remembers previous images within a conversation |
+| Auto Styling | Scheduled daily outfit recs with weather awareness |
 
-- It starts where users already are: Telegram
-- It accepts visual references instead of requiring fashion vocabulary
-- It does transformation, not simple recreation
-- It produces both explanation and visual payoff
+## Tech Stack
 
-## Stack
-
-- Hermes Agent for orchestration
-- Telegram as the user-facing interface
-- GLM for chat and image understanding
-- FAL as the default image generator
-- OpenAI Images as the first fallback
-- Google Gemini as the second fallback
+- **Orchestration:** Hermes Agent
+- **Interface:** Telegram Bot
+- **Vision/Chat:** GLM-4 Vision
+- **Image Generation:** FAL FLUX 2 Pro / OpenAI DALL-E / Google Gemini
+- **Image Transform:** Gemini multimodal (reference + prompt -> new outfit)
+- **Web Search:** Firecrawl API
 
 ## Quick Start
 
-1. Install Hermes Agent in WSL2.
-2. Copy [SKILL.md](/c:/Users/cheo/Desktop/projeler/nous/Stylish-hermes/skill/SKILL.md) to `~/.hermes/skills/lifestyle/ai-personal-stylist/SKILL.md`.
-3. Add your API keys to `~/.hermes/.env`.
-4. Run `hermes gateway setup`.
-5. Start the bot with `hermes gateway`.
-6. Test the Telegram flow before the demo.
-
-## Required Secrets
-
 ```bash
-GLM_API_KEY=...
-GLM_BASE_URL=https://api.z.ai/api/coding/paas/v4
-FAL_KEY=...                    # Image gen primary (optional)
-OPENAI_API_KEY=...             # Image gen fallback 1 (optional)
-GEMINI_API_KEY=...             # Image gen fallback 2 (optional)
-TELEGRAM_BOT_TOKEN=...
-AUXILIARY_VISION_PROVIDER=main
-AUXILIARY_VISION_MODEL=glm-4.6v-flash
+# 1. Install Hermes Agent in WSL2
+bash scripts/setup-wsl.sh
+
+# 2. Copy skill definition
+cp skill/SKILL.md ~/.hermes/skills/lifestyle/ai-personal-stylist/SKILL.md
+
+# 3. Configure environment
+cp .env.example ~/.hermes/.env
+# Edit ~/.hermes/.env with your API keys
+
+# 4. Validate config
+python3 scripts/validate-config.py
+
+# 5. Apply patches (run the ones you need)
+python3 scripts/fix-hermes-max-tokens.py
+python3 scripts/enable-gemini-image-transform.py
+python3 scripts/enable-openai-image-fallback.py
+python3 scripts/enable-gemini-image-fallback.py
+python3 scripts/enable-inline-keyboard.py
+python3 scripts/enable-side-by-side.py
+python3 scripts/enable-provider-logging.py
+python3 scripts/enable-rate-limiting.py
+
+# 6. Start the bot
+hermes gateway setup
+hermes gateway
 ```
 
-At least one image generation key (FAL_KEY, OPENAI_API_KEY, or GEMINI_API_KEY) is needed for visual output.
+## Required API Keys
+
+```bash
+TELEGRAM_BOT_TOKEN=...        # Required - get from @BotFather
+GLM_API_KEY=...               # Required - vision + chat model
+FAL_KEY=...                   # Image gen (primary)
+OPENAI_API_KEY=...            # Image gen (fallback 1)
+GEMINI_API_KEY=...            # Image gen (fallback 2) + visual transform
+FIRECRAWL_API_KEY=...         # Optional - web search & weather
+```
+
+At least one image generation key is needed for visual output.
 
 ## Project Structure
 
-```text
-skill/SKILL.md
-docs/prompts.md
-docs/how-it-works.md
-docs/hackathon-demo.md
-docs/hackathon-pitch.md
-docs/first-run-checklist.md
-docs/cron-prompts.md
-data/wardrobe.json
-scripts/setup-wsl.sh
-scripts/fix-hermes-max-tokens.py
-scripts/enable-openai-image-fallback.py
-scripts/enable-gemini-image-fallback.py
-scripts/enable-gemini-image-transform.py
-scripts/setup-cron-jobs.py
+```
+skill/SKILL.md                         # Bot behavior definition (11 workflows)
+demo/index.html                        # Interactive demo showcase page
+demo/DEMO-SCRIPT.md                    # 90-second demo script
+docs/
+  prompts.md                           # 23 ready-to-use prompts
+  how-it-works.md                      # Core concept explanation
+  hackathon-demo.md                    # Demo flow guide
+  hackathon-pitch.md                   # Pitch versions (15s/30s/60s)
+scripts/
+  setup-wsl.sh                         # WSL2 initial setup
+  validate-config.py                   # Config validator
+  fix-hermes-max-tokens.py             # Token limit patch
+  enable-openai-image-fallback.py      # OpenAI fallback
+  enable-gemini-image-fallback.py      # Gemini fallback
+  enable-gemini-image-transform.py     # Visual transform feature
+  apply-gemini-patches.py              # Meta Gemini patcher
+  enable-inline-keyboard.py            # Telegram button UI
+  enable-side-by-side.py               # Before/after comparison images
+  enable-provider-logging.py           # Provider usage analytics
+  enable-rate-limiting.py              # Anti-spam protection
+  cleanup-image-cache.py               # Disk space management
+  setup-cron-jobs.py                   # Automated scheduling
 ```
 
-## Notes
+## Why It Wins
 
-- Demo Telegram, not the raw terminal.
-- The default mode is inspiration analysis.
-- The best demo is transformation, not recreation.
-- Only use wardrobe mode if the user explicitly wants to track real clothes.
-- Never commit real API keys or bot tokens.
-- If FAL is locked or out of balance, run `python scripts/enable-openai-image-fallback.py` and use `OPENAI_API_KEY`.
-- If OpenAI billing limit is hit, run `python scripts/enable-gemini-image-fallback.py` and use `GEMINI_API_KEY`.
-- Fallback order: FAL -> OpenAI -> Gemini. At least one must be configured.
-- For visual transform (reference image -> transformed outfit), run `python scripts/enable-gemini-image-transform.py`.
-- For automated daily/weekly styling, run `python scripts/setup-cron-jobs.py --city Istanbul`.
+- **Visual in, visual out** - strong before-and-after demo moment
+- **Zero friction** - no app to download, lives in Telegram
+- **No fashion vocabulary needed** - send a photo, get an outfit
+- **Real agent workflow** - not a GPT wrapper, actual agentic pipeline with fallbacks
+- **Transformation, not recreation** - translates aesthetic into something wearable
+
+## License
+
+MIT
