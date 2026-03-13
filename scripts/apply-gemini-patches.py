@@ -19,7 +19,7 @@ if "GEMINI_IMAGE_MODEL" not in text:
     addition = '''
 
 # Gemini image generation config
-GEMINI_IMAGE_MODEL = "gemini-2.0-flash-exp"
+GEMINI_IMAGE_MODEL = "gemini-2.5-flash-image"
 GEMINI_ASPECT_RATIO_MAP = {
     "landscape": "16:9",
     "square": "1:1",

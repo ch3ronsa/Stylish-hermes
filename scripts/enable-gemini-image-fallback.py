@@ -38,7 +38,7 @@ AFTER_OPENAI_CONSTANTS = 'OPENAI_SIZE_MAP = {\n    "landscape": "1536x1024",\n  
 GEMINI_CONSTANTS = '''
 
 # Gemini image generation config
-GEMINI_IMAGE_MODEL = "gemini-2.0-flash-exp"
+GEMINI_IMAGE_MODEL = "gemini-2.5-flash-image"
 GEMINI_ASPECT_RATIO_MAP = {
     "landscape": "16:9",
     "square": "1:1",
