@@ -34,6 +34,8 @@ Stylish Hermes **translates** inspiration into action:
 | Inline Keyboard | One-tap style choices (Casual, Office, Bold) |
 | Smart Fallbacks | Triple image gen: FAL -> OpenAI -> Gemini |
 | Session Memory | Remembers previous images within a conversation |
+| Celebrity Style Match | "Who dresses like this?" — top 3 celeb matches with % |
+| Style DNA Card | Your unique style identity with visual breakdown |
 | Auto Styling | Scheduled daily outfit recs with weather awareness |
 
 ## Tech Stack
@@ -92,7 +94,7 @@ At least one image generation key is needed for visual output.
 ## Project Structure
 
 ```
-skill/SKILL.md                         # Bot behavior definition (11 workflows)
+skill/SKILL.md                         # Bot behavior definition (13 workflows)
 demo/index.html                        # Interactive demo showcase page
 demo/DEMO-SCRIPT.md                    # 90-second demo script
 docs/

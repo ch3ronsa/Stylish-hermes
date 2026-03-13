@@ -247,6 +247,91 @@ When the user wants to see how an outfit would look on them:
 4. If `image_transform` is unavailable, describe in text how the outfit would likely look on them based on their body proportions and coloring.
 5. Always note that generated try-on images are approximations and actual fit may vary.
 
+## Workflow 12: Celebrity Style Match
+
+When the user sends an image and asks "who dresses like this?", "which celebrity?", "style match", or wants to know which celebrity or style icon has a similar aesthetic:
+
+1. Use `vision_analyze` on the image to extract the full aesthetic profile: color palette, silhouette, layering, accessories, mood, and overall vibe.
+2. Match the aesthetic against well-known style archetypes and celebrity fashion identities. Consider:
+   - Hollywood / red carpet icons (e.g. Zendaya, Timothée Chalamet, Hailey Bieber)
+   - Street style icons (e.g. A$AP Rocky, Bella Hadid, Kanye West)
+   - Classic / minimalist icons (e.g. Audrey Hepburn, Steve Jobs, Carolyn Bessette)
+   - K-fashion / anime-inspired icons (e.g. G-Dragon, Lisa from BLACKPINK)
+   - Designer muses and runway references
+3. Return the top 3 matches with:
+   - Celebrity name and their signature style in one sentence
+   - Match percentage (approximate, based on aesthetic overlap)
+   - What specific elements connect the user's image to that celebrity's style (e.g. "the oversized silhouette and earth tones are very Kanye circa 2020")
+   - One key difference or twist that makes the user's look unique
+4. Suggest how to lean further into the strongest match if the user wants to.
+5. If image generation is available, offer to generate an outfit that blends the user's current look with their top celebrity match.
+
+Example response format:
+```
+🎯 Style Match Results:
+
+1. Hailey Bieber (82%) — Your clean lines and neutral palette scream quiet luxury à la Hailey. The structured bag and minimal jewelry seal the deal.
+
+2. Rosie Huntington-Whiteley (71%) — The tailored silhouette and tonal dressing echo her off-duty aesthetic.
+
+3. Kendall Jenner (65%) — The model-off-duty vibe with premium basics is very Kendall.
+
+Your twist: You're mixing in a slightly edgier shoe choice that none of them would typically go for — keep that, it's your signature.
+```
+
+## Workflow 13: Style DNA Card
+
+When the user asks for their "style DNA", "style profile", "style identity", "what's my style?", or wants a summary of their fashion personality:
+
+1. Gather style data from one or more sources:
+   - Images the user has sent during this session
+   - Previously analyzed outfits and inspirations from session memory
+   - The user's wardrobe file if wardrobe tracking is active
+   - Any style preferences stored in Hermes memory
+2. If no data is available yet, ask the user to send 3-5 images that represent their style (outfits they wear, inspiration they like, or both).
+3. Analyze all available data and calculate a style breakdown across these categories:
+   - **Minimal / Clean** — Simple lines, neutral palette, less is more
+   - **Streetwear / Urban** — Sneakers, oversized fits, graphic elements, hype culture
+   - **Old Money / Quiet Luxury** — Tailored, premium fabrics, understated elegance
+   - **Bohemian / Free Spirit** — Flowing fabrics, earth tones, layered textures
+   - **Avant-Garde / Editorial** — Experimental shapes, bold choices, fashion-forward
+   - **Classic / Timeless** — Structured pieces, heritage brands, polished looks
+   - **Sporty / Athleisure** — Performance fabrics, comfort-first, active lifestyle
+   - **Romantic / Feminine** — Soft textures, florals, delicate details
+4. Generate a Style DNA Card with:
+   - **Style Name** — A creative 2-3 word title for their unique style (e.g. "Urban Minimalist", "Soft Power", "Neo Classic")
+   - **Top 3 Categories** with percentages (must add up to 100%)
+   - **Signature Colors** — Their most-used color palette (3-5 colors)
+   - **Power Piece** — The one item type that defines their look most
+   - **Style Superpower** — What they do best in fashion (e.g. "effortless layering", "color confidence", "accessory game")
+   - **Growth Edge** — One area they could explore to evolve their style
+   - **Celebrity Twin** — The celebrity whose style is closest to theirs (tie into Workflow 12)
+5. Use `image_generate` to create a visual mood card that represents their style DNA:
+   - Prompt should describe a fashion flat-lay or styled vignette that captures their aesthetic
+   - Include their signature colors and key pieces
+6. Present the card in a clean, shareable format.
+
+Example response format:
+```
+━━━━━━━━━━━━━━━━━━━━━
+   ✦ YOUR STYLE DNA ✦
+━━━━━━━━━━━━━━━━━━━━━
+
+Style Name: "Urban Minimalist"
+
+◆ Minimal / Clean     45%  ████████░░
+◆ Streetwear / Urban  30%  ██████░░░░
+◆ Old Money           25%  █████░░░░░
+
+Signature Colors: Black, Charcoal, Off-White, Olive
+Power Piece: Oversized structured coat
+Style Superpower: Tonal layering — you make 3 shades of gray look intentional
+Growth Edge: Try one bold accessory per outfit (a colored scarf or statement ring)
+Celebrity Twin: Timothée Chalamet meets Steve Jobs
+
+━━━━━━━━━━━━━━━━━━━━━
+```
+
 ## Error Handling
 
 When something goes wrong, always give the user a clear, friendly explanation instead of technical errors.
