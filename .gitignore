@@ -18,3 +18,5 @@ secrets/
 .env.local
 .env.production
 .env.staging
+demo/twitter-post.md
+demo/DEMO-SCRIPT.md
