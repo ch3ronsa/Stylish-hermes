@@ -1,84 +1,98 @@
-# 90-Second Demo Script
+# Stylish Hermes — Live Demo (90 seconds)
 
-## Setup (before you start)
-- Open `demo/index.html` in browser (fullscreen, F11)
-- Open Telegram with bot ready
-- Have a strong reference image ready (anime outfit, Pinterest editorial, or runway look)
-- Split screen: browser left, Telegram right
+## Setup Before Demo
+- Have 2-3 good fashion images ready (Pinterest editorial, street style, runway)
+- Bot running in Telegram
+- Phone screen mirrored to projector
 
 ---
 
 ## THE SHOW
 
-### [0:00 - 0:15] HOOK (Hero slide visible)
-> "Herkes Pinterest'te, Instagram'da ilham biriktiriyor...
-> ama kimse o ilhamı gerçek hayatta giyemiyor.
-> Biz bunu çözdük."
+### [0:00 - 0:10] HOOK
 
-**Scroll to Problem section**
+**Say:** "Everyone saves fashion inspiration. No one knows how to wear it. This bot fixes that."
 
-### [0:15 - 0:25] PROBLEM (Problem cards animate in)
-> "Kaydedilen outfitler hiç giyilmiyor.
-> Mevcut AI araçlar sadece etiket veriyor - 'old money', 'streetwear'...
-> Ama ne giyeceğini söylemiyor."
+**Action:** Open Telegram, type `/start`
 
-**Scroll to Flow section**
-
-### [0:25 - 0:35] HOW IT WORKS (Flow steps animate)
-> "Stylish Hermes Telegram'da yasiyor.
-> Bir gorsel at, AI analiz etsin, vibeini al, giyilebilir hale donustursun,
-> ve sana yeni outfit gorseli uretsin."
-
-**Switch to Telegram (already have the bot open)**
-
-### [0:35 - 0:55] LIVE DEMO
-1. Send the reference image
-2. Type: `Analyze this image briefly: aesthetic, colors, occasion, wearable version.`
-3. While waiting, say:
-> "Simdi bu gorseli analiz ediyor - renk paleti, estetik, siluet..."
-
-4. When analysis arrives, quickly say:
-> "Gordugunuz gibi stili parcaladi. Simdi bunu giyilebilir hale donusturuyoruz."
-
-5. Type: `Transform this into a practical everyday look for Istanbul spring. Keep the vibe.`
-
-### [0:55 - 1:10] TRANSFORMATION RESULT
-> "Bu sadece kopyalama degil - dönüşüm.
-> Referansin vibeini aliyor, ama gercek hayata uyarliyor.
-> Hava durumu, ortam, butce - hepsini dusunuyor."
-
-**If time allows, request image generation:**
-`Generate this as a realistic fashion image.`
-
-### [1:10 - 1:25] VALUE (Scroll to Value section)
-> "Visual in, visual out. Indirmesi gereken uygulama yok.
-> Moda bilgisi gerekmiyor. Gercek bir agent workflow - wrapper degil."
-
-### [1:25 - 1:30] CLOSING (Scroll to Closing)
-> "Biz moda ilhamini insanlarin gercekten giyebilecegi seylere donusturuyoruz."
+**Show:** Bot greets with personality + inline buttons appear
 
 ---
 
-## BACKUP PLANS
+### [0:10 - 0:30] INSPIRATION ANALYSIS
 
-### If image generation is slow:
-- Show the text transformation result
-- Say: "Gorsel uretim de var ama asil deger bu donusumde"
+**Say:** "Send any image — Pinterest, anime, runway, anything."
 
-### If bot doesn't respond:
-- Show pre-recorded screenshots
-- Focus on the presentation slides
+**Action:** Send a strong editorial/runway image (no text, just the image)
 
-### If judges ask questions:
-- "Bu taste-to-execution. Ilhami aksiyona ceviriyoruz."
-- "Donusum yapiyoruz, kopyalama degil."
-- "Kullanicinin moda terminolojisi bilmesine gerek yok."
-- "3 farkli image provider ile fallback zinciri var - FAL, OpenAI, Gemini"
+**Show:** Bot automatically analyzes:
+- Style aesthetic
+- Color palette
+- Silhouette breakdown
+- 3 wearability levels (easier / wearable / bolder)
+
+**Key moment:** Bot talks like a stylish friend, not a robot.
 
 ---
 
-## KEY PHRASES TO REMEMBER
-- "Inspiration to execution"
-- "Transformation, not recreation"
-- "No fashion vocabulary needed"
-- "Lives where users already are - Telegram"
+### [0:30 - 0:55] VISUAL TRANSFORM — THE MONEY SHOT
+
+**Say:** "Now watch this. I'll ask it to make this wearable for me."
+
+**Action:** Type: `Turn this into a casual spring outfit for Istanbul`
+
+**Show:** Bot generates a brand new outfit image inspired by the reference.
+
+**Say:** "It didn't copy the outfit. It translated the *vibe* into something I can actually wear tomorrow."
+
+**Key moment:** Side-by-side comparison — original vs. transformed.
+
+---
+
+### [0:55 - 1:10] CELEBRITY MATCH
+
+**Say:** "Let's have some fun."
+
+**Action:** Type: `Who dresses like this?`
+
+**Show:** Bot returns top 3 celebrity matches with percentages and reasoning.
+
+**Say:** "Shareable, fun, drives engagement."
+
+---
+
+### [1:10 - 1:25] STYLE DNA
+
+**Say:** "After a few images, the bot builds your style identity."
+
+**Action:** Type: `What's my Style DNA?`
+
+**Show:** Style DNA card with categories, signature colors, power piece, celebrity twin + generated mood image.
+
+---
+
+### [1:25 - 1:30] CLOSE
+
+**Say:** "Vision in, outfit out. No app to download. No fashion vocabulary needed. Just Telegram."
+
+---
+
+## IF SOMETHING FAILS
+
+- **Image generation down?** → "The bot has 3 fallback providers — FAL, OpenAI, Gemini. Even if all fail, it gives you a detailed text outfit so you're never stuck."
+- **Slow response?** → "It's running vision analysis + image generation — two AI models back to back. That's the pipeline working, not lag."
+
+## BACKUP: JUDGE Q&A
+
+| Question | Answer |
+|----------|--------|
+| "How is this different from ChatGPT?" | "ChatGPT describes outfits. We generate them. And we use the reference image as actual input to the generation — it's not text-to-image, it's image-to-image translation." |
+| "What's the tech?" | "Hermes Agent for orchestration, GLM-4 for vision, Gemini for image transform, triple fallback chain for reliability." |
+| "Can it scale?" | "It's a Telegram bot — zero friction deployment. The pipeline is stateless per-session. Each user gets their own context." |
+| "What's the business model?" | "Premium features: unlimited transforms, saved style profiles, brand partnerships for shopping recs." |
+
+## KEY PHRASES
+- **"Inspiration to execution"**
+- **"Transformation, not recreation"**
+- **"No fashion vocabulary needed"**
+- **"Lives where users already are"**

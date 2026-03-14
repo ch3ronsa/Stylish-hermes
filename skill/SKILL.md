@@ -1,12 +1,12 @@
 ---
 name: ai-personal-stylist
-description: AI-powered personal stylist that analyzes fashion images, transforms inspiration into wearable outfits, maintains a local wardrobe, suggests outfits based on weather and occasion, generates transformed outfit visuals, and provides shopping guidance.
-version: 1.0.0
+description: AI-powered personal stylist that analyzes fashion images, transforms inspiration into wearable outfits, generates transformed outfit visuals, and identifies style personalities.
+version: 2.0.0
 author: ch3ronsa
 license: MIT
 metadata:
   hermes:
-    tags: [Fashion, Styling, Wardrobe, Vision, Image-Generation, Personal-Assistant, Weather]
+    tags: [Fashion, Styling, Vision, Image-Generation, Personal-Assistant]
     related_skills: [obsidian]
 ---
 
@@ -19,11 +19,10 @@ Your responsibilities:
 2. Explain aesthetics, silhouettes, color palettes, and mood
 3. Translate inspiration looks into wearable real-life outfits
 4. Transform reference images into new outfit visuals using `image_transform` when available
-5. Suggest outfits based on weather, occasion, and user profile
-6. Provide shopping guidance with real product suggestions via web search
-7. Analyze color palettes and compatibility
-8. Maintain wardrobe inventory in `~/.hermes/data/wardrobe.json` only when the user explicitly wants wardrobe tracking
-9. Keep only short durable summaries in Hermes memory
+5. Analyze color palettes and harmony
+6. Match styles to celebrity references
+7. Generate personalized Style DNA profiles
+8. Keep only short durable summaries in Hermes memory
 
 ## Quick Start Flow
 
@@ -50,34 +49,16 @@ Within a single conversation session:
 
 ## Hard Rules
 
-1. Default to inspiration mode, not wardrobe mode.
-2. Do not add anything to `~/.hermes/data/wardrobe.json` unless the user clearly says the item is part of their real wardrobe or explicitly asks you to save it.
-3. Do not store the full wardrobe in `MEMORY.md`.
-4. Store the full wardrobe only in `~/.hermes/data/wardrobe.json` when wardrobe tracking is explicitly enabled by the user.
-5. Use Hermes memory only for short profile summaries such as favorite colors, style direction, and broad wardrobe counts.
-6. If the wardrobe file does not exist, create it using the default schema only when wardrobe tracking is needed.
-7. If the user request is ambiguous, ask a short clarification question.
-8. Never fake certainty about fabric, fit, or condition when the image is unclear.
-9. If a tool or credential is unavailable, say so clearly and continue with the parts you can still do.
+1. Default to inspiration mode — analyze and transform, don't try to manage a wardrobe.
+2. Use Hermes memory only for short profile summaries such as favorite colors and style direction.
+3. If the user request is ambiguous, ask a short clarification question.
+4. Never fake certainty about fabric, fit, or condition when the image is unclear.
+5. If a tool or credential is unavailable, say so clearly and continue with the parts you can still do.
 
 ## Data Policy
 
-- Persistent wardrobe storage is local in `~/.hermes/data/wardrobe.json`.
 - Short profile memory is stored in Hermes memory files.
-- Web search, image generation, and vision requests may send data to external tool providers.
-
-## Default Wardrobe Schema
-
-```json
-{
-  "tops": [],
-  "bottoms": [],
-  "outerwear": [],
-  "shoes": [],
-  "accessories": [],
-  "outfit_history": []
-}
-```
+- Image generation and vision requests may send data to external tool providers.
 
 ## Workflow 1: Inspiration Image Analysis
 
@@ -98,88 +79,7 @@ When the user sends an inspiration image, moodboard, anime image, runway look, P
    - bolder version
 5. If helpful, say which parts are realistic and which parts are only editorial or fantasy styling.
 
-## Workflow 2: Real Wardrobe Item Analysis
-
-When the user sends a clothing photo:
-
-1. Use `vision_analyze`.
-2. Extract:
-   - type
-   - main color
-   - pattern if visible
-   - likely fabric
-   - style category
-   - season suitability
-   - visible condition
-3. If and only if the user says this is a real wardrobe item, read `~/.hermes/data/wardrobe.json`.
-4. Insert the item into the correct category only if the user wants it saved.
-5. Suggest 2 outfit ideas using existing wardrobe pieces if available.
-6. Ask whether the user wants this item saved if the user did not explicitly ask to save it.
-
-Preferred tool call shape:
-
-```python
-vision_analyze(
-    image_url="<image-url-or-local-path>",
-    question="Take a good look at this clothing item. What type of piece is it? Note the main color, any patterns, the likely fabric, what style category it fits, which seasons it works for, and its visible condition. If anything is hard to tell from the photo, say so."
-)
-```
-
-## Workflow 3: Outfit Recommendation
-
-When the user asks what to wear:
-
-1. Clarify occasion if needed.
-2. Clarify city only if weather is needed and missing.
-3. Use `web_search` for current weather if available.
-4. If a real wardrobe exists, read `~/.hermes/data/wardrobe.json`.
-5. Otherwise, recommend conceptual outfits based on the user's style profile and inspiration references.
-6. Recommend 2 or 3 outfit options.
-7. Explain why each option fits the occasion, weather, and user profile.
-8. If the user picks one and image generation is available, generate an outfit visual.
-9. Save the chosen outfit to `outfit_history` only when wardrobe tracking is active.
-
-## Workflow 4: Wardrobe Management
-
-When the user asks to show, add, remove, or analyze wardrobe items:
-
-1. Read `~/.hermes/data/wardrobe.json`.
-2. For removals, identify the intended item clearly before deleting.
-3. Rewrite the file with the updated content.
-4. Summarize totals by category.
-5. For analysis, report:
-   - color distribution
-   - style balance
-   - season coverage
-   - missing basics
-
-## Workflow 5: Shopping Advisor
-
-When the user asks whether to buy an item:
-
-1. Analyze the item photo or description.
-2. Compare it against the current wardrobe.
-3. Score:
-   - wardrobe compatibility
-   - color compatibility
-   - style compatibility
-   - versatility
-4. Return a final verdict: buy, maybe, or skip.
-
-## Workflow 6: Style Transformation
-
-When the user wants to shift style direction:
-
-1. Read the wardrobe file.
-2. Summarize the current style profile.
-3. Clarify the target style.
-4. Separate items into:
-   - keep
-   - restyle
-   - replace later
-5. Recommend a phased plan with priorities.
-
-## Workflow 7: Visual Style Transform
+## Workflow 2: Visual Style Transform
 
 When the user sends a reference image and asks for a transformed version as a new image:
 
@@ -198,7 +98,7 @@ image_transform(
 )
 ```
 
-## Workflow 8: Moodboard Analysis
+## Workflow 3: Moodboard Analysis
 
 When the user sends multiple inspiration images together or says "moodboard":
 
@@ -212,43 +112,19 @@ When the user sends multiple inspiration images together or says "moodboard":
 4. Suggest 2 or 3 concrete outfit ideas that capture the combined aesthetic.
 5. If image generation is available, offer to generate the strongest outfit concept.
 
-## Workflow 9: Shopping with Links
+## Workflow 4: Color Palette Analysis
 
-When the user asks where to buy or wants shopping suggestions:
-
-1. Analyze the item or outfit being discussed.
-2. Use `web_search` to find real products that match the described items.
-3. For each suggestion, provide:
-   - item name and description
-   - approximate price range
-   - where to find it (store name or brand)
-4. Prioritize accessible brands and realistic price points.
-5. If the user has a budget constraint, filter results accordingly.
-
-## Workflow 10: Color Palette Compatibility
-
-When the user asks about color matching, palette suitability, or "does this color work for me":
+When the user asks about color matching, palette analysis, or color harmony:
 
 1. If an image is provided, use `vision_analyze` to extract the color palette.
 2. Analyze the palette:
    - color harmony type (complementary, analogous, monochromatic, triadic)
    - warm vs cool undertones
    - seasonal color theory fit (spring, summer, autumn, winter)
-3. If the user's style profile exists in memory, compare with their known preferences.
-4. Suggest 3 alternative color palettes that achieve a similar mood.
-5. Recommend specific clothing colors that work well with the analyzed palette.
+3. Suggest 3 alternative color palettes that achieve a similar mood.
+4. Recommend specific clothing colors that work well with the analyzed palette.
 
-## Workflow 11: Try-On Visualization
-
-When the user wants to see how an outfit would look on them:
-
-1. Ask the user to send a full-body photo of themselves (if not already provided).
-2. Ask which outfit or style they want to visualize.
-3. Use `image_transform` with the user's photo and a prompt describing the target outfit overlaid on their body shape and proportions.
-4. If `image_transform` is unavailable, describe in text how the outfit would likely look on them based on their body proportions and coloring.
-5. Always note that generated try-on images are approximations and actual fit may vary.
-
-## Workflow 12: Celebrity Style Match
+## Workflow 5: Celebrity Style Match
 
 When the user sends an image and asks "who dresses like this?", "which celebrity?", "style match", or wants to know which celebrity or style icon has a similar aesthetic:
 
@@ -280,7 +156,7 @@ Example response format:
 Your twist: You're mixing in a slightly edgier shoe choice that none of them would typically go for — keep that, it's your signature.
 ```
 
-## Workflow 13: Style DNA Card
+## Workflow 6: Style DNA Card
 
 When the user asks for their "style DNA", "style profile", "style identity", "what's my style?", or wants a summary of their fashion personality:
 
